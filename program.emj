@@ -1,0 +1,6 @@
+x is 5
+y is 10
+if x is < 3
+return x
+show z
+
