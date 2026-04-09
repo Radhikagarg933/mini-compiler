@@ -187,6 +187,13 @@
   }
   .sym-value {
     color: var(--text); font-family: 'JetBrains Mono', monospace;
+    max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .sym-scope {
+    color: #a78bfa; font-weight: 500; text-transform: uppercase; font-size: 10px;
+  }
+  .sym-size {
+    color: var(--text-dim); text-align: center; font-weight: 500;
   }
   .sym-occur {
     color: var(--text-dim); text-align: center;
@@ -238,7 +245,8 @@
 <header>
   <div class="logo">Mini<span>Comp</span><small>Compiler</small></div>
   <div style="display:flex;align-items:center;gap:8px;font-size:11px;color:var(--text-dim);">
-    <span class="status-dot"></span> ready
+    <div class="status-dot"></div>
+    <span>Ready</span>
   </div>
 </header>
 
@@ -249,12 +257,17 @@
       <span class="dot dot-red"></span>
       <span class="dot dot-yellow"></span>
       <span class="dot dot-green"></span>
-      &nbsp; Enter Your Code
+      <span style="margin-left:8px;">code.src</span>
     </div>
+
     <div class="editor-body">
-      <div class="line-numbers" id="line-nums">1</div>
-      <textarea id="code-input" oninput="updateLines()"
-        onkeydown="handleTab(event)"></textarea>
+      <div class="line-numbers" id="line-nums"></div>
+      <textarea
+        id="code-input"
+        placeholder="// Write your code here...&#10;&#10;show 'Hello, World!';"
+        onkeydown="handleTab(event)"
+        oninput="updateLines()"
+      ></textarea>
     </div>
   </div>
 
@@ -373,6 +386,8 @@ async function compile() {
                 <th>Name</th>
                 <th>Type</th>
                 <th>Value</th>
+                <th>Scope</th>
+                <th>Size</th>
                 <th>Occurrences</th>
               </tr>
             </thead>
@@ -390,13 +405,17 @@ async function compile() {
           
           const displayName = name.includes(':') ? name.split(':')[1] : name;
           const displayType = name.split(':')[0];
+          const scope = symbol.scope || 'global';
+          const size = symbol.size || (symbol.occurrences ? 1 : '-');
           const occurrences = symbol.occurrences || '-';
           
           html += `
             <tr>
               <td class="sym-name">${esc(displayName)}</td>
               <td class="sym-type">${esc(displayType)}</td>
-              <td class="sym-value">${esc(valueStr)}</td>
+              <td class="sym-value" title="${esc(valueStr)}">${esc(valueStr)}</td>
+              <td class="sym-scope">${esc(scope)}</td>
+              <td class="sym-size">${esc(String(size))}</td>
               <td class="sym-occur">${esc(String(occurrences))}</td>
             </tr>
           `;

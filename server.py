@@ -47,6 +47,31 @@ def classify_token(token):
     return ('UNKNOWN', token)
 
 
+def calculate_size(value):
+    """Calculate the size of a value"""
+    if isinstance(value, list):
+        return len(value)  # Array length
+    elif isinstance(value, str):
+        return len(value)  # String length
+    elif isinstance(value, dict):
+        return len(value)  # Object/map property count
+    else:
+        return 1  # Scalar values have size 1
+
+
+def get_variable_scope(var_name, all_variables):
+    """Determine the scope of a variable"""
+    # In a basic implementation, all variables are global unless we track function scopes
+    # This can be enhanced if you implement function-level scoping in your executor
+    
+    # Check if variable is a function (optional - depends on your executor)
+    if f"FUNCTION:{var_name}" in str(all_variables):
+        return "function"
+    
+    # Default to global scope
+    return "global"
+
+
 @app.route('/run', methods=['POST'])
 def run():
     try:
@@ -107,30 +132,66 @@ def run():
         output = execute(instructions)
         
         # ─────────────────────────────────────────────
-        # PHASE 4: SYMBOL TABLE (Operators, Keywords, and Variables)
+        # PHASE 4: SYMBOL TABLE (Operators, Keywords, Variables with Scope & Size)
         # ─────────────────────────────────────────────
         symbol_table = {}
         
         # Add all tracked tokens (operators, keywords, numbers, etc.)
         for key, info in all_tokens_tracked.items():
-            symbol_table[key] = info
+            symbol_table[key] = {
+                'type': info['type'],
+                'value': info['value'],
+                'occurrences': info['occurrences'],
+                'scope': 'global',  # Tokens are always global
+                'size': 1  # Tokens have size 1
+            }
         
-        # Add runtime variables with their values
+        # Add runtime variables with their values, scope, and size
         for var_name, var_value in variables.items():
+            scope = get_variable_scope(var_name, variables)
+            size = calculate_size(var_value)
+            
             if isinstance(var_value, list):
                 symbol_table[f"VARIABLE:{var_name}"] = {
                     'type': 'array',
-                    'value': var_value
+                    'value': var_value,
+                    'scope': scope,
+                    'size': size
+                }
+            elif isinstance(var_value, str):
+                symbol_table[f"VARIABLE:{var_name}"] = {
+                    'type': 'string',
+                    'value': var_value,
+                    'scope': scope,
+                    'size': size
+                }
+            elif isinstance(var_value, bool):
+                symbol_table[f"VARIABLE:{var_name}"] = {
+                    'type': 'boolean',
+                    'value': str(var_value).lower(),
+                    'scope': scope,
+                    'size': 1
                 }
             elif isinstance(var_value, (int, float)):
                 symbol_table[f"VARIABLE:{var_name}"] = {
                     'type': 'number',
-                    'value': var_value
+                    'value': var_value,
+                    'scope': scope,
+                    'size': 1
+                }
+            elif var_value is None:
+                symbol_table[f"VARIABLE:{var_name}"] = {
+                    'type': 'null',
+                    'value': 'null',
+                    'scope': scope,
+                    'size': 1
                 }
             else:
                 symbol_table[f"VARIABLE:{var_name}"] = {
-                    'type': 'value',
-                    'value': str(var_value)
+                    'type': 'object',
+                    'value': str(var_value),
+                    'scope': scope,
+                    'size': calculate_size(var_value)
                 }
         
         return jsonify({
