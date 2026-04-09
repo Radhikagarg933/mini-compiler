@@ -1,0 +1,263 @@
+# ============================================================
+#   MiniComp Compiler — Sample Test Codes
+#   Language: .emj
+#   Operators: ➕ ➖ ✖ ➗ 🔺(>) 🔻(<) 🤝(==)
+# ============================================================
+
+
+# ─────────────────────────────────────────────
+# TEST 1 — Simple Assignment & Show
+# ─────────────────────────────────────────────
+x is 5
+y is 20
+show x
+show y
+
+
+# ─────────────────────────────────────────────
+# TEST 2 — All Math Operators
+# ─────────────────────────────────────────────
+a is 10
+b is 3
+c is a ➕ b
+show c
+d is a ➖ b
+show d
+e is a ✖ b
+show e
+f is a ➗ b
+show f
+
+
+# ─────────────────────────────────────────────
+# TEST 3 — Comparison Check
+# ─────────────────────────────────────────────
+x is 8
+y is 5
+result is x 🔺 y
+show result
+result2 is x 🔻 y
+show result2
+result3 is x 🤝 y
+show result3
+
+
+# ─────────────────────────────────────────────
+# TEST 4 — If Else Basic
+# ─────────────────────────────────────────────
+age is 18
+if age 🔺 17
+show 18
+else
+show 0
+end
+
+
+# ─────────────────────────────────────────────
+# TEST 5 — Nested If Else (Grade System)
+# ─────────────────────────────────────────────
+marks is 75
+if marks 🔺 90
+show 4
+else
+if marks 🔺 70
+show 3
+else
+if marks 🔺 50
+show 2
+else
+show 1
+end
+end
+end
+
+
+# ─────────────────────────────────────────────
+# TEST 6 — While Loop Counter
+# ─────────────────────────────────────────────
+i is 1
+while i 🔻 6
+show i
+i is i ➕ 1
+end
+
+
+# ─────────────────────────────────────────────
+# TEST 7 — While Loop Countdown
+# ─────────────────────────────────────────────
+n is 10
+while n 🔺 0
+show n
+n is n ➖ 1
+end
+
+
+# ─────────────────────────────────────────────
+# TEST 8 — While Loop Sum (1 to 5)
+# ─────────────────────────────────────────────
+i is 1
+sum is 0
+while i 🔻 6
+sum is sum ➕ i
+i is i ➕ 1
+end
+show sum
+
+
+# ─────────────────────────────────────────────
+# TEST 9 — Multiplication Table (3x)
+# ─────────────────────────────────────────────
+n is 3
+i is 1
+while i 🔻 11
+result is n ✖ i
+show result
+i is i ➕ 1
+end
+
+
+# ─────────────────────────────────────────────
+# TEST 10 — Switch Basic
+# ─────────────────────────────────────────────
+day is 2
+switch day
+case 1
+show 1
+case 2
+show 2
+case 3
+show 3
+end
+
+
+# ─────────────────────────────────────────────
+# TEST 11 — Switch with More Cases
+# ─────────────────────────────────────────────
+grade is 3
+switch grade
+case 1
+show 10
+case 2
+show 20
+case 3
+show 30
+case 4
+show 40
+case 5
+show 50
+end
+
+
+# ─────────────────────────────────────────────
+# TEST 12 — Array Create & Access
+# ─────────────────────────────────────────────
+arr is [10, 20, 30, 40, 50]
+show arr[0]
+show arr[2]
+show arr[4]
+
+
+# ─────────────────────────────────────────────
+# TEST 13 — Array with Variable Index
+# ─────────────────────────────────────────────
+arr is [100, 200, 300]
+i is 0
+show arr[i]
+i is 1
+show arr[i]
+i is 2
+show arr[i]
+
+
+# ─────────────────────────────────────────────
+# TEST 14 — Array with Loop (print all)
+# ─────────────────────────────────────────────
+arr is [5, 10, 15, 20, 25]
+i is 0
+while i 🔻 5
+show arr[i]
+i is i ➕ 1
+end
+
+
+# ─────────────────────────────────────────────
+# TEST 15 — Array with If inside Loop
+# ─────────────────────────────────────────────
+arr is [3, 8, 1, 9, 2]
+i is 0
+while i 🔻 5
+x is arr[i]
+if x 🔺 5
+show x
+end
+i is i ➕ 1
+end
+
+
+# ─────────────────────────────────────────────
+# TEST 16 — Factorial (5!)
+# Expected output: 120
+# ─────────────────────────────────────────────
+n is 5
+result is 1
+i is 1
+while i 🔻 6
+result is result ✖ i
+i is i ➕ 1
+end
+show result
+
+
+# ─────────────────────────────────────────────
+# TEST 17 — Fibonacci (First 7 Terms)
+# Expected output: 0 1 1 2 3 5 8
+# ─────────────────────────────────────────────
+a is 0
+b is 1
+i is 0
+while i 🔻 7
+show a
+temp is a ➕ b
+a is b
+b is temp
+i is i ➕ 1
+end
+
+
+# ─────────────────────────────────────────────
+# TEST 18 — Even Numbers 1 to 20
+# ─────────────────────────────────────────────
+i is 2
+while i 🔻 21
+show i
+i is i ➕ 2
+end
+
+
+# ─────────────────────────────────────────────
+# TEST 19 — Find Max of Two Numbers
+# ─────────────────────────────────────────────
+a is 42
+b is 78
+if a 🔺 b
+show a
+else
+show b
+end
+
+
+# ─────────────────────────────────────────────
+# TEST 20 — Find Max in Array
+# Expected output: 9
+# ─────────────────────────────────────────────
+arr is [4, 7, 2, 9, 1]
+i is 0
+max is 0
+while i 🔻 5
+x is arr[i]
+if x 🔺 max
+max is x
+end
+i is i ➕ 1
+end
+show max

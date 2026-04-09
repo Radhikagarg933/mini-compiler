@@ -1,75 +1,92 @@
 # parser.py
 
-def parse(lines):
+def parse(token_lines):
+    """
+    token_lines: list of lists. Each inner list is raw tokens from a line.
+    """
     instructions = []
     i = 0
 
-    while i < len(lines):
-        tokens = lines[i]
+    while i < len(token_lines):
+        tokens = token_lines[i]
 
         # Skip empty lines
         if not tokens:
             i += 1
             continue
 
-        # Assignment
+        # Assignment: a is 10  or  c is a ➕ b
         if len(tokens) >= 3 and tokens[1] == "is":
-            instructions.append(("assign", tokens[0], tokens[2:]))
+            var_name = tokens[0]
+            expr = tokens[2:]
+            instructions.append(("assign", var_name, expr))
 
-        # Show / Print
-        elif tokens[0] in ("show", "print"):
-            instructions.append(("print", tokens[1:]))
+        # Show / Print: show x  or  print x
+        elif len(tokens) >= 1 and tokens[0] in ("show", "print"):
+            expr = tokens[1:]
+            instructions.append(("print", expr))
 
-        # Input
-        elif tokens[0] == "input":
-            instructions.append(("input", tokens[1]))
+        # Input: input x
+        elif len(tokens) >= 1 and tokens[0] == "input":
+            var_name = tokens[1] if len(tokens) > 1 else None
+            instructions.append(("input", var_name))
 
         # If-Else
-        elif tokens[0] == "if":
+        elif len(tokens) >= 1 and tokens[0] == "if":
             condition = tokens[1:]
             block = []
             else_block = []
 
             i += 1
-            while i < len(lines) and (lines[i] and lines[i][0] not in ("else", "end")):
-                block.append(lines[i])
+            while i < len(token_lines) and token_lines[i]:
+                if token_lines[i][0] in ("else", "end"):
+                    break
+                block.append(token_lines[i])
                 i += 1
 
-            if i < len(lines) and lines[i] and lines[i][0] == "else":
+            if i < len(token_lines) and token_lines[i] and token_lines[i][0] == "else":
                 i += 1
-                while i < len(lines) and (lines[i] and lines[i][0] != "end"):
-                    else_block.append(lines[i])
+                while i < len(token_lines) and token_lines[i]:
+                    if token_lines[i][0] == "end":
+                        break
+                    else_block.append(token_lines[i])
                     i += 1
 
             instructions.append(("if", condition, parse(block), parse(else_block)))
 
         # While
-        elif tokens[0] == "while":
+        elif len(tokens) >= 1 and tokens[0] == "while":
             condition = tokens[1:]
             block = []
 
             i += 1
-            while i < len(lines) and (lines[i] and lines[i][0] != "end"):
-                block.append(lines[i])
+            while i < len(token_lines) and token_lines[i]:
+                if token_lines[i][0] == "end":
+                    break
+                block.append(token_lines[i])
                 i += 1
 
             instructions.append(("while", condition, parse(block)))
 
         # Switch
-        elif tokens[0] == "switch":
-            var = tokens[1]
+        elif len(tokens) >= 1 and tokens[0] == "switch":
+            var = tokens[1] if len(tokens) > 1 else None
             cases = {}
             i += 1
 
-            while i < len(lines) and (lines[i] and lines[i][0] != "end"):
-                if lines[i][0] == "case":
-                    val = lines[i][1]
+            while i < len(token_lines) and token_lines[i]:
+                if token_lines[i][0] == "end":
+                    break
+                if token_lines[i][0] == "case":
+                    case_val = token_lines[i][1] if len(token_lines[i]) > 1 else None
                     i += 1
                     block = []
-                    while i < len(lines) and (lines[i] and lines[i][0] not in ("case", "end")):
-                        block.append(lines[i])
+                    while i < len(token_lines) and token_lines[i]:
+                        if token_lines[i][0] in ("case", "end"):
+                            break
+                        block.append(token_lines[i])
                         i += 1
-                    cases[val] = parse(block)
+                    cases[case_val] = parse(block)
                 else:
                     i += 1
 
