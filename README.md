@@ -45,35 +45,57 @@ mini-compiler/
 └── __pycache__/         # Python cache files
 
 ```
-### ▶️ How to Run the Project
+---
+
+## ▶️ How to Run the Project
 
 ### 1️⃣ Install Requirements
+
+```bash
 pip install flask
----
-###2️⃣ Run Backend Server
+```
+
+### 2️⃣ Run Backend Server
+
+```bash
 python server.py
----
-###3️⃣ Open Frontend
+```
+
+### 3️⃣ Open Frontend
 
 Open this file:
 
+```
 compiler.html
+```
 
 OR visit:
 
+```
 http://localhost:5000
+```
 
 ---
-###💡 How It Works
-1.User enters code in the web interface
-2.Frontend sends code to server.py
-3.Server processes it through:
-4.lexer.py → token generation
-5.parser.py → syntax validation
-6.executor.py → code execution
-Output is returned back to the user in real time
----
-###🎥 Demo Video
 
-👉 Watch Demo Video
+## 💡 How It Works
+
+```
+User Input  →  lexer.py  →  parser.py  →  executor.py  →  Output
+               (tokens)     (syntax)       (execution)
+```
+
+1. User enters code in the web interface
+2. Frontend sends code to `server.py`
+3. Server processes it through:
+   - `lexer.py` → token generation
+   - `parser.py` → syntax validation
+   - `executor.py` → code execution
+4. Output is returned back to the user in real time
+
+---
+
+## 🎥 Demo Video
+
+👉 [Watch Demo Video](https://youtu.be/S63RfeQkLwY?si=Gv7At-g21xgsjUXW)
+
 ---
