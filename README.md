@@ -48,11 +48,10 @@ mini-compiler/
 ## ▶️ How to Run the Project
 
 ### 1️⃣ Install Requirements
-```bash
 pip install flask
-2️⃣ Run Backend Server
+###2️⃣ Run Backend Server
 python server.py
-3️⃣ Open Frontend
+###3️⃣ Open Frontend
 
 Open this file:
 
@@ -61,5 +60,18 @@ compiler.html
 OR visit:
 
 http://localhost:5000
-```
+
+---
+###💡 How It Works
+1.User enters code in the web interface
+2.Frontend sends code to server.py
+3.Server processes it through:
+4.lexer.py → token generation
+5.parser.py → syntax validation
+6.executor.py → code execution
+Output is returned back to the user in real time
+---
+###🎥 Demo Video
+
+👉 Watch Demo Video
 ---
