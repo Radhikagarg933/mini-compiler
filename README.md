@@ -45,12 +45,14 @@ mini-compiler/
 └── __pycache__/         # Python cache files
 
 ```
-## ▶️ How to Run the Project
+### ▶️ How to Run the Project
 
 ### 1️⃣ Install Requirements
 pip install flask
+---
 ###2️⃣ Run Backend Server
 python server.py
+---
 ###3️⃣ Open Frontend
 
 Open this file:
