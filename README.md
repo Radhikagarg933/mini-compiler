@@ -23,9 +23,7 @@ This Project is  built using Python and HTML that simulates basic compiler phase
 - Flask / Python HTTP Server
 
 ---
-## 🎥 Demo Video
 
-👉 [Watch Demo Video](https://youtu.be/S63RfeQkLwY)
 
 ## 📂 Project Structure
 
@@ -48,30 +46,29 @@ mini-compiler/
 
 ```
 ---
----
 
-## ▶️ How to Run the Project
 
-### Step 1: Install Requirements
-
-```bash
+##▶️ How to Run the Project
+Step 1: Install Requirements
 pip install flask
 Step 2: Run Backend Server
 python server.py
 Step 3: Open Frontend
 
-Open:
-
+Open the file:
 compiler.html
+OR if the server is running, visit:http://localhost:5000
+---
+##💡 How It Works
+1.User enters code in the web interface
+2.Frontend sends code to server.py
+3.Server processes it through:
+4.lexer.py → token generation
+5.parser.py → syntax validation
+6.executor.py → code execution
+7.Output is returned back to the user in the correct format
+---
+## 🎥 Demo Video
 
-OR if server is running:
-
-http://localhost:5000
-💡 How It Works
-User enters code in the web interface
-Frontend sends code to server.py
-Server passes code to:
-lexer.py → token generation
-parser.py → syntax validation
-executor.py → execution
-Output is returned back to UI
+👉 [Watch Demo Video](https://youtu.be/S63RfeQkLwY)
+---
