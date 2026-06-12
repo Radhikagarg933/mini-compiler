@@ -21,8 +21,8 @@ This project is built using **Python and HTML** that simulates basic compiler ph
 
 - Python 3
 - HTML5
-- CSS (optional)
-- JavaScript (optional)
+- CSS 
+- JavaScript 
 - Flask / Python HTTP Server
 
 ---
